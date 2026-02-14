@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ultimate Valentine & Birthday Surprise 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Roboto', sans-serif;
+  overflow:hidden; height:100vh; display:flex;
+  flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; 
+  background:linear-gradient(135deg,#ff9a9e,#fad0c4);
+  background-size:400% 400%; animation:gradientShift 20s ease infinite;
+  color:#fff;
+}
+@keyframes gradientShift{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+h1{
+  font-family:'Pacifico',cursive;
+  font-size:clamp(2rem,6vw,4rem);
+  margin-bottom:1rem;
+  text-shadow:2px 2px 12px #ff6f91;
+  animation:glow 2s infinite alternate,bounce 3s ease-in-out infinite;
+}
+@keyframes glow{0%{text-shadow:2px 2px 8px #ff6f91;}50%{text-shadow:4px 4px 20px #ff3c6e;}100%{text-shadow:2px 2px 8px #ff6f91;}}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.nickname{font-size:clamp(1rem,4vw,1.8rem);margin-bottom:1rem;animation:pulseRotate 2s infinite;cursor:pointer;}
+@keyframes pulseRotate{0%{transform:scale(1) rotate(0deg);color:#fff;}50%{transform:scale(1.1) rotate(5deg);color:#ffdde1;}100%{transform:scale(1) rotate(0deg);color:#fff;}}
+.message{font-size:clamp(1rem,2.5vw,1.3rem);max-width:90%;line-height:1.5;color:#fff0f5;margin-bottom:1rem;min-height:4em;transition:opacity 0.5s;}
+#countdown{font-family:'Pacifico',cursive;font-size:clamp(1.5rem,5vw,2.5rem);color:#fff0f5;text-shadow:2px 2px 10px #ff6f91;margin-bottom:1.5rem;}
+.hearts,.trail,.particles,.stars,.emojiRain{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;overflow:hidden;}
+.heart,.trail-heart,.particle,.star,.emoji{position:absolute;opacity:0.9;animation:float linear infinite;user-select:none;font-size:1rem;}
+@keyframes float{0%{transform:translateY(100vh) rotate(0deg);opacity:0.8;}100%{transform:translateY(-10vh) rotate(360deg);opacity:0;}}
+#player iframe{width:clamp(250px,50vw,500px);height:clamp(150px,28vw,280px);border-radius:15px;box-shadow:0 0 20px rgba(0,0,0,0.5);margin-bottom:1rem;}
+#control{position:fixed;bottom:20px;right:20px;background:#ff6f91;border:none;border-radius:50%;width:60px;height:60px;font-size:1.5rem;cursor:pointer;color:#fff;box-shadow:0 0 10px rgba(0,0,0,0.5);transition:0.3s;}
+#control:hover{background:#ff3c6e;transform:scale(1.1);}
+</style>
+</head>
+<body>
+
+<div class="hearts" id="hearts"></div>
+<div class="trail" id="trail"></div>
+<div class="particles" id="particles"></div>
+<div class="stars" id="stars"></div>
+<div class="emojiRain" id="emojiRain"></div>
+
+<h1 id="main-title">Happy Valentine's Day, Dania! 💖</h1>
+<div class="nickname" id="nickname">Bacha 🥰 | Jaan 💕 | Rasmalai 🍮 | Moto 🐻</div>
+<div class="message" id="message"></div>
+<div id="countdown"></div>
+
+<div id="player">
+<iframe id="ytplayer" src="https://www.youtube.com/embed/lGN4wBbNwwQ?autoplay=1&loop=1&playlist=lGN4wBbNwwQ" title="YouTube video player" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+</div>
+<button id="control">⏸️</button>
+
+<script>
+// Floating Hearts
+const heartsContainer=document.getElementById('hearts');
+function createHeart(){const heart=document.createElement('div');heart.className='heart';
+heart.style.left=Math.random()*100+'vw';heart.style.fontSize=(Math.random()*2+1.2)+'rem';
+heart.style.animationDuration=(Math.random()*3+4)+'s';heart.innerHTML=['❤️','💖','💕','💘'][Math.floor(Math.random()*4)];
+heartsContainer.appendChild(heart);setTimeout(()=>heart.remove(),7000);}
+setInterval(createHeart,250);
+
+// Particles
+const particleContainer=document.getElementById('particles');
+function createParticle(){const p=document.createElement('div');p.className='particle';
+p.style.left=Math.random()*100+'vw';p.style.top=Math.random()*100+'vh';
+p.style.width=p.style.height=(Math.random()*3+1)+'px';p.style.backgroundColor='#fff';p.style.opacity=Math.random();
+particleContainer.appendChild(p);setTimeout(()=>p.remove(),7000);}
+setInterval(createParticle,150);
+
+// Shooting Stars
+const starsContainer=document.getElementById('stars');
+function createStar(){const s=document.createElement('div');s.className='star';
+s.style.left=Math.random()*100+'vw';s.style.top=Math.random()*50+'vh';
+s.style.width=s.style.height=(Math.random()*2+1)+'px';s.style.backgroundColor='#fff';
+s.style.opacity=Math.random();starsContainer.appendChild(s);setTimeout(()=>s.remove(),3000);}
+setInterval(createStar,1200);
+
+// Typing Messages
+const valentineMessages=["Bacha, tum meri sunshine ho ☀️","Jaan, main hamesha tumhare saath hoon 💕","Rasmalai, tum meri favorite ho 🍮","Moto, tum meri happiness ka reason ho 🐻","Mere life ka sabse special part tum ho ❤️"];
+const birthdayMessages=["🎉 Happy Birthday, Dania! 🎂","Tum meri life ki sabse pyari ho 🥰","Rasmalai 🍮, meri khushi ka reason ho ❤️","Moto 🐻, tum meri duniya ho 💕"];
+let msgIndex=0,charIndex=0,isBirthday=false;
+const messageEl=document.getElementById('message');
+function typeMessage(){const messages=isBirthday?birthdayMessages:valentineMessages;messageEl.style.opacity=1;
+if(charIndex<messages[msgIndex].length){messageEl.innerHTML+=messages[msgIndex].charAt(charIndex);charIndex++;
+setTimeout(typeMessage,60);}else{setTimeout(()=>{messageEl.style.opacity=0;setTimeout(()=>{ charIndex=0; msgIndex=(msgIndex+1)%messages.length; messageEl.innerHTML=''; typeMessage();},500)},2000);}}
+typeMessage();
+
+// Mouse Trail Hearts
+const trailContainer=document.getElementById('trail');
+document.addEventListener('mousemove',e=>{const tHeart=document.createElement('div');tHeart.className='trail-heart';
+tHeart.style.left=e.clientX+'px';tHeart.style.top=e.clientY+'px';
+tHeart.innerHTML=['💖','💗','💘'][Math.floor(Math.random()*3)];tHeart.style.fontSize=(Math.random()*1.2+0.8)+'rem';
+trailContainer.appendChild(tHeart);setTimeout(()=>tHeart.remove(),1000);});
+
+// YouTube Control
+const controlBtn=document.getElementById('control');let playing=true;
+controlBtn.addEventListener('click',()=>{const iframe=document.getElementById('ytplayer');
+if(playing){iframe.contentWindow.postMessage('{"event":"command","func":"pauseVideo","args":""}','*');controlBtn.innerHTML='▶️';} 
+else{iframe.contentWindow.postMessage('{"event":"command","func":"playVideo","args":""}','*');controlBtn.innerHTML='⏸️';}playing=!playing;});
+
+// Emoji Rain / Confetti on click
+const emojiContainer=document.getElementById('emojiRain');
+document.addEventListener('click',()=>{for(let i=0;i<30;i++){const e=document.createElement('div');e.className='emoji';
+const emojis=['💖','💕','💘','💗','🎂','🍮','🐻','🥰'];e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+e.style.left=Math.random()*window.innerWidth+'px';
+e.style.fontSize=(Math.random()*2+1)+'rem';
+e.style.animationDuration=(Math.random()*3+2)+'s';
+emojiContainer.appendChild(e);
+setTimeout(()=>e.remove(),4000);}});
+
+// Countdown & Birthday Mode
+const countdownEl=document.getElementById('countdown');
+function updateCountdown(){const now=new Date();let year=now.getFullYear();
+let birthday=new Date(`March 17, ${year} 00:00:00`);if(now>birthday){birthday.setFullYear(year+1);}
+const diff=birthday-now;const days=Math.floor(diff/(1000*60*60*24));
+const hours=Math.floor((diff/(1000*60*60))%24);const minutes=Math.floor((diff/(1000*60))%60);
+const seconds=Math.floor((diff/1000)%60);
+countdownEl.innerHTML=`🎂 ${days}d ${hours}h ${minutes}m ${seconds}s until your Birthday! 🎉`;
+if(diff<=0){isBirthday=true;countdownEl.innerHTML=`🎉 Happy Birthday, Dania! ❤️`;
+document.getElementById('main-title').innerText='🎉 Happy Birthday, Dania! 💖';
+clearInterval(timer);
+for(let i=0;i<150;i++){const e=document.createElement('div');e.className='emoji';
+const emojis=['💖','💕','💘','💗','🎂','🍮','🐻','🥰'];e.innerText=emojis[Math.floor(Math.random()*emojis.length)];
+e.style.left=Math.random()*window.innerWidth+'px';
+e.style.fontSize=(Math.random()*2+1)+'rem';
+e.style.animationDuration=(Math.random()*3+2)+'s';
+emojiContainer.appendChild(e);
+setTimeout(()=>e.remove(),5000);}}}
+updateCountdown();const timer=setInterval(updateCountdown,1000);
+
+// Music-Reactive Gradient Background
+const audio = new Audio("https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"); // Replace with your music file
+audio.crossOrigin = "anonymous"; audio.loop = true; audio.volume = 0.2;
+audio.play().catch(()=>console.log("Autoplay blocked"));
+
+const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const source = audioCtx.createMediaElementSource(audio);
+const analyser = audioCtx.createAnalyser();
+source.connect(analyser);
+analyser.connect(audioCtx.destination);
+analyser.fftSize = 256;
+const dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+function animateBackground() {
+  analyser.getByteFrequencyData(dataArray);
+  let avg = dataArray.reduce((a,b)=>a+b,0)/dataArray.length;
+  const speed = 20 - avg/40; // map amplitude to speed
+  document.body.style.animationDuration = speed + 's';
+  requestAnimationFrame(animateBackground);
+}
+animateBackground();
+</script>
+
+</body>
+</html>
